@@ -4,8 +4,6 @@
     "paths": {
       "components/*": ["components/*"],
       "models/*": ["models/*"]
-    },
-    "jsx": "react"
-  },
-  "exclude": ["node_modules"]
+    }
+  }
 }
