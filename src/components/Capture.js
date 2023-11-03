@@ -10,6 +10,7 @@ import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import 'custom.scss';
+// import { clear } from '@testing-library/user-event/dist/clear';
 const WebcamComponent = () => <Webcam />
 const size = 1280;
 function dataURItoBlob(dataURI) {
@@ -38,26 +39,32 @@ const Capture = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('lg'));
   // const { Canvas, Image, ImageData } = canvas
-  faceapi.env.monkeyPatch({
-    Canvas: HTMLCanvasElement,
-    Image: HTMLImageElement,
-    ImageData: ImageData,
-    Video: HTMLVideoElement,
-    createCanvasElement: () => document.createElement('canvas'),
-    createImageElement: () => document.createElement('img')
-  })
+
   // console.log(faceapi.nets, ':nets')
   const [picture, setPicture] = useState('')
   const [faceLen, setFaceLen] = useState(null)
   const [faceDetect, setFaceDetect] = useState(true)
   const [ facingMode, setFacingMode ] = useState('user')
   const [ facePicture, setFacePicture ] = useState([])
-  const videoInterval = setInterval(() => {
-    if (webcamRef.current) {
-      setFaceDetect(false);
-      clearInterval(videoInterval);
-    }
-  }, 250);
+  const [ timer, setTimer ] = useState(null)
+  const doTimer = () => {
+      if (timer) {
+        clearTimeout(timer);
+        setTimer(null);
+      }
+    const videoTimout = setTimeout(() => {
+      if (webcamRef.current) {
+        setFaceDetect(false);
+        clearTimeout(timer);
+        setTimer(null);
+        loadModels();
+        console.log('loadModels');
+        return;
+      }
+      doTimer();
+    }, 500);
+    setTimer(videoTimout)
+}
   const videoConstraints = {
     width: size,
     aspectRatio: matches ? 16 / 9 : 1 / 1,
@@ -114,12 +121,20 @@ const Crop = (input, index) => {
   })
 
   const loadModels = async () => {
-    await faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+    await faceapi.nets.ssdMobilenetv1.loadFromUri(`/models`)
     // await faceapi.nets.faceLandmark68Net.loadFromUri('/models')
     // await faceapi.nets.faceRecognitionNet.loadFromUri('/models')
   }
   useEffect(() => {
-    const rs = loadModels()
+    doTimer();
+    faceapi.env.monkeyPatch({
+      Canvas: HTMLCanvasElement,
+      Image: HTMLImageElement,
+      ImageData: ImageData,
+      Video: HTMLVideoElement,
+      createCanvasElement: () => document.createElement('canvas'),
+      createImageElement: () => document.createElement('img')
+    })
     // console.log(rs, ':rs');
   }, [])
 
