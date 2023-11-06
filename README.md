@@ -2,6 +2,8 @@
 
 This is an implementation using the face-api JavaScript API, built with the React framework to create a web UI. It allows you to capture images from the camera and detect faces, then take screenshots of the detected faces and draw bounding boxes around them.
 You can run the project by executing 'yarn start', or you can view the YouTube demo short at https://youtube.com/shorts/ARsAf4ktjiU?si=Vdc-AgPiZDevFsKv.
+
+If you encounter problems while downloading the model, remember to set the weight files to be downloaded in binary format, or you can temporarily use the model URLs provided by the open-source contributor at https://justadudewhohacks.github.io/face-api.js/models/.
 The inspiration for this project comes from face-api.js. You can find more information at https://justadudewhohacks.github.io/face-api.js/docs/index.html.
 
 ## Available Scripts
