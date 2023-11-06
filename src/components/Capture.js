@@ -199,8 +199,8 @@ const Capture = () => {
 
   const loadModels = async () => {
     const path = "https://justadudewhohacks.github.io/face-api.js/models/"
-    // await faceapi.loadSsdMobilenetv1Model('/models')
-    await faceapi.nets.ssdMobilenetv1.loadFromUri(path)
+    await faceapi.nets.ssdMobilenetv1.load('/models')
+    // await faceapi.nets.ssdMobilenetv1.loadFromUri(path)
     // await faceapi.nets.faceLandmark68Net.loadFromUri('/models')
     // await faceapi.nets.faceRecognitionNet.loadFromUri('/models')
   }

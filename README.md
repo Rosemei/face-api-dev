@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is an implementation using the face-api JavaScript API, built with the React framework to create a web UI. It allows you to capture images from the camera and detect faces, then take screenshots of the detected faces and draw bounding boxes around them.
+You can run the project by executing 'yarn start', or you can view the YouTube demo short at https://youtube.com/shorts/ARsAf4ktjiU?si=Vdc-AgPiZDevFsKv.
 
 ## Available Scripts
 
